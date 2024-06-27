@@ -3,7 +3,7 @@
 *My Demo App* is a... demo app! 
 It was built by the Sauce Labs team to showcase the product capabilities of the Sauce Labs mobile devices cloud, focusing on our Appium flutter driver integration. 
 
-Test this with [Appium Flutter Integration Driver]([https://github.com/saucelabs/my-demo-app-android](https://github.com/AppiumTestDistribution/appium-flutter-integration-driver/) 
+Test this with [Appium Flutter Integration Driver](https://github.com/AppiumTestDistribution/appium-flutter-integration-driver) 
 You can find code examples in our [training repository]([https://github.com/saucelabs/my-demo-app-android](https://github.com/saucelabs-training/demo-java))
 
 <h1 align="center">
