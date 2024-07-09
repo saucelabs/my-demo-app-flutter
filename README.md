@@ -77,5 +77,5 @@ flutter build ios integration_test/appium_test.dart --simulator
 For Real Device - Release mode
    
 ```bash
-flutter build ipa --release integration_test/test.dart
+flutter build ipa --release integration_test/appium_test.dart
 ```
