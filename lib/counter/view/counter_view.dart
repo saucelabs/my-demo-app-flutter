@@ -29,7 +29,10 @@ class CounterView extends StatelessWidget {
               builder: (context, state) {
                 return Semantics(
                   label: 'counter_value',
-                  child: Text('$state', style: textTheme.displayMedium),
+                  child: Text(
+                    '$state', 
+                    key: const Key('textView_counterValue_Text'),
+                    style: textTheme.displayMedium),
                 );
               },
             ),

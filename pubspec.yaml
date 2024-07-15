@@ -45,6 +45,8 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  flutter_driver:
+    sdk: flutter
   mocktail: ^1.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
