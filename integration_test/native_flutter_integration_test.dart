@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 // Add as app because we want to make sure the app loaded correctly on the device by calling the main function in the main dart file.
 import 'package:my_demo_app_flutter/main.dart' as app;
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
   group('E2E Test With Flutter', (){
     testWidgets("First testing scenario increment 5 decrement 3", 
     (tester) async {

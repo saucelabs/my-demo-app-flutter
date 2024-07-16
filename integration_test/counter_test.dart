@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:my_demo_app_flutter/main.dart' as app; // Ensure this path is correct
 
 void main() {
-  final IntegrationTestWidgetsFlutterBinding binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-  testWidgets('Counter App Integration Test', (WidgetTester tester) async {
+   testWidgets('Counter App Integration Test', (WidgetTester tester) async {
     // Build the app and trigger a frame.
     app.main();
     
