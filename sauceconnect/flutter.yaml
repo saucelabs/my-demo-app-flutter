@@ -11,7 +11,7 @@ suites:
       class:
         - com.example.my_demo_app_flutter.MainActivityTest
     devices:
-      - name: ".*"
+      - name: "Google Pixel.*"
 artifacts:
   download:
     when: always
