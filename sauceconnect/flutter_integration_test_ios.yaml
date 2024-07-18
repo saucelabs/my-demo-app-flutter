@@ -1,0 +1,20 @@
+apiVersion: x
+kind: espresso
+sauce:
+  concurrency: 1
+espresso:
+  app: ../build/app/outputs/flutter-apk/app-debug.apk
+  testApp: ../build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+suites:
+  - name: "Sauce Labs Espresso with flutter integration tests"
+    testOptions:
+      class:
+        - com.example.my_demo_app_flutter.MainActivityTest
+    devices:
+      - name: "Google Pixel.*"
+artifacts:
+  download:
+    when: always
+    match:
+      - junit.xml
+    directory: ./
