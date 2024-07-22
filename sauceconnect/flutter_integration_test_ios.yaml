@@ -1,0 +1,17 @@
+apiVersion: v1alpha
+kind: xcuitest
+sauce:
+  concurrency: 1
+xcuitest:
+  app: ../build/app/outputs/flutter-apk/app-debug.apk
+  testApp: ../build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+suites:
+  - name: "Sauce Labs xcuitest with flutter integration tests"
+    devices:
+      - name: "Google Pixel.*"
+artifacts:
+  download:
+    when: always
+    match:
+      - junit.xml
+    directory: ./
