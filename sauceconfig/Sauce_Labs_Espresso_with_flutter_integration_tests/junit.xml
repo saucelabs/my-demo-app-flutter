@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<testsuite name="Sauce Labs Espresso with flutter integration tests" tests="1" failures="0" skipped="0" timestamp="2024-12-04T08:55:12.609Z" time="20.204" package="com.example.my_demo_app_flutter">
-    <testcase name="First testing scenario increment 5 decrement 3" classname="com.example.my_demo_app_flutter.MainActivityTest" time="0.258"/>
-</testsuite>

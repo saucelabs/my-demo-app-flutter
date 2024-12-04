@@ -3,8 +3,8 @@ kind: espresso
 sauce:
   concurrency: 1
 espresso:
-  app: /Users/mootazbahri/Desktop/apps/flutter_app/my_demo_app_flutter/build/app/outputs/flutter-apk/app-debug.apk
-  testApp: /Users/mootazbahri/Desktop/apps/flutter_app/my_demo_app_flutter/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+  app: ./build/app/outputs/flutter-apk/app-debug.apk
+  testApp: ./build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 suites:
   - name: "Sauce Labs Espresso with flutter integration tests"
     testOptions:
