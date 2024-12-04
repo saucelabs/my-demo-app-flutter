@@ -30,7 +30,6 @@ void main() {
        *      find.byType(TextFormField).at(0)
        *      find.byKey(const Key("test"))
        */
-      // await tester.enterText(find.byType(TextFormField).at(0), "Text To be written");
 
       // Click the increment button 5 times
       const incKey = Key('counterView_increment_floatingActionButton');
