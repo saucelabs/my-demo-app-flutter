@@ -1,0 +1,17 @@
+apiVersion: v1alpha
+kind: xctest
+sauce:
+  concurrency: 1
+xctest:
+  app: ./build/ios_integration/Build/Products/Release-iphoneos/Runner.app
+  xcTestRunFile: ./build/ios_integration/Build/Products/Runner_iphoneos18.1-arm64.xctestrun
+suites:
+  - name: "Basic XCTest"
+    devices:
+      - name: ".*"
+artifacts:
+  download:
+    when: always
+    match:
+      - junit.xml
+    directory: ./
