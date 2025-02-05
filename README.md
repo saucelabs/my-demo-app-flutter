@@ -5,15 +5,9 @@
 *My Demo App Flutter* is a mobile application developed using Flutter based 
 on [Flutter Counter example application](https://github.com/felangel/bloc/tree/master/examples/flutter_counter). 
 Modified by the Sauce Labs team, this app is designed to demonstrate the robust capabilities of Sauce Labs' 
-mobile devices cloud, with a particular focus on our integration with the [Appium Flutter Integration Driver](https://github.com/AppiumTestDistribution/appium-flutter-integration-driver).
+mobile devices cloud, with a particular focus on our integration with the [Appium Flutter Integration Driver](https://github.com/AppiumTestDistribution/appium-flutter-integration-driver)
 
-You can find additional code examples in our [training repository](https://github.com/saucelabs-training/demo-js/tree/main/webdriverio/appium-app/examples/appium-flutter-integration) 
-
-<h1 align="center">
-	<br>
-	<img src="Logo.png" alt="Flutter-Appium">
-	<br>
-</h1>
+In addition to Appium, this app also supports running Flutter integration tests using native test frameworks like Espresso (for Android) and XCTest (for iOS) on Sauce Labs, providing a comprehensive testing solution for Flutter applications.
 
 ## Requirements
 
