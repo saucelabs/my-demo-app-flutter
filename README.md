@@ -177,7 +177,7 @@ native test frameworks, `Espresso` and `XCTest`.
    ```
    OR simply run:
     ```shell
-    make android-apk-files
+    make build-android-apk-files
     ```
 9. Configure `saucectl` to run the test.
     * Create a folder `.sacue` in your project root directory.
@@ -369,7 +369,7 @@ native test frameworks, `Espresso` and `XCTest`.
     ```
     OR simply run:
     ```shell
-    make ios-ipa-files
+    make build-ios-ipa-files
     ```
 16. Configure `saucectl` to run the test.
   * Create a folder `.sauce` in your project root directory.

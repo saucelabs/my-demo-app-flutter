@@ -12,13 +12,13 @@ build-for-testing:
 	  -derivedDataPath $(DERIVED_DATA_PATH) \
 	  build-for-testing
 
-ios-ipa-files: build-for-testing
+build-ios-ipa-files: build-for-testing
 	cd $(OUTPUT_DIR) \
 	&& mkdir Payload \
 	&& cp -r Release-iphoneos/Runner.app Payload \
 	&& zip -r Runner.ipa Payload
 
-android-apk-files:
+build-android-apk-files:
 	pushd android \
     && ./gradlew app:assembleAndroidTest \
     && ./gradlew app:assembleDebug -Ptarget="$(FLUTTER_INTEGRATION_TEST_DART_FILE)"
