@@ -14,6 +14,7 @@ In addition to Appium, this app also supports running Flutter integration tests 
 To build and use this demo app, ensure you have the following dependencies installed on your local machine:
 
 - [Flutter SDK](https://docs.flutter.dev/get-started/install)
+- [Saucectl](https://docs.saucelabs.com/dev/cli/saucectl/)
 - For Android applications:
     - [Java 17](https://openjdk.org/projects/jdk/17/)
     - [Android SDK](https://developer.android.com/tools/releases/platform-tools)
