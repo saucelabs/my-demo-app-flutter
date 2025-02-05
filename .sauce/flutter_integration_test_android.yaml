@@ -16,5 +16,5 @@ artifacts:
   download:
     when: always
     match:
-      - junit.xml
+      - "*.*"
     directory: ./

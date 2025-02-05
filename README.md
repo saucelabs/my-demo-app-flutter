@@ -168,7 +168,7 @@ native test frameworks, `Espresso` and `XCTest`.
       });
     }
    ```
-8. Use the following `Gradle` commands to build an instrumentation test `.apk` file(test suite) using the `MainActivityTest.java` created in the `androidTest` directory as mentioned in step 3.
+8. Use the following `Gradle` commands to build an instrumentation test `.apk` file(test suite) using the `MainActivityTest.java` created in the `androidTest` directory as mentioned in step 3, **or** you can use the `make` command to build the application and build the apk files.
    ```bash title="Terminal Command"
     # Go to the android folder which contains the "gradlew" script used for building Android apps from the terminal
     pushd android
@@ -180,7 +180,10 @@ native test frameworks, `Espresso` and `XCTest`.
     # Go back to the root of the project
     popd
    ```
-
+   OR simply run:
+    ```shell
+    make android-apk-files
+    ```
 9. Configure `saucectl` to run the test.
     * Create a folder `.sacue` in your project root directory.
     * Inside this folder create a `flutter_integration_test_android.yaml` with the following content:
@@ -337,7 +340,7 @@ native test frameworks, `Espresso` and `XCTest`.
      flutter build ios --config-only integration_test/flutter_integration_test.dart
     ```
 15. Execute the following bash script at the root of your Flutter app, this bash script will build the flutter app and generate
-    the `xctestrun` file which contains all the necessary configs to successfully trigger the integration test
+    the `xctestrun` file which contains all the necessary configs to successfully trigger the integration test, **or** you can use the `make` command to build the application and build the ipa file.
     ```shell
     output="../build/ios_integration"
     product="build/ios_integration/Build/Products"
@@ -367,6 +370,11 @@ native test frameworks, `Espresso` and `XCTest`.
     cp -r Release-iphoneos/Runner.app Payload
     zip -r Runner.ipa Payload
     popd
+    
+    ```
+    OR simply run:
+    ```shell
+    make ios-ipa-files
     ```
 16. Configure `saucectl` to run the test.
   * Create a folder `.sauce` in your project root directory.
