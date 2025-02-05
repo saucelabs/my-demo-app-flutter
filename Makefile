@@ -23,4 +23,6 @@ build-android-apk-files:
     && ./gradlew app:assembleAndroidTest \
     && ./gradlew app:assembleDebug -Ptarget="$(FLUTTER_INTEGRATION_TEST_DART_FILE)"
 
+build: build-android-apk-files build-ios-ipa-files
 
+.DEFAULT_GOAL := build
