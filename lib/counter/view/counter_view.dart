@@ -1,15 +1,46 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../counter.dart';
 
 /// {@template counter_view}
-/// A [StatelessWidget] which reacts to the provided
-/// [CounterCubit] state and notifies it in response to user input.
+/// A [StatefulWidget] which reacts to the provided
+/// [CounterCubit] state and notifies it in response to user input,
+/// and also displays a timer.
 /// {@endtemplate}
-class CounterView extends StatelessWidget {
+class CounterView extends StatefulWidget {
   /// {@macro counter_view}
   const CounterView({super.key});
+
+  @override
+  State<CounterView> createState() => _CounterViewState();
+}
+
+class _CounterViewState extends State<CounterView> {
+  int _secondsElapsed = 0;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _secondsElapsed++;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +51,17 @@ class CounterView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'assets/logo.png', // Path to the logo image
-              height: 162, // Adjust height as needed
+              'assets/logo.png',
+              height: 162,
               width: 162,
             ),
-            const SizedBox(height: 20), // Space between image and text
+            const SizedBox(height: 20),
+            Text(
+              'Timer: $_secondsElapsed seconds',
+              key: const Key('textView_timer_Text'),
+              style: textTheme.titleLarge?.copyWith(color: Colors.blue),
+            ),
+            const SizedBox(height: 10),
             BlocBuilder<CounterCubit, int>(
               builder: (context, state) {
                 return Semantics(
@@ -32,7 +69,8 @@ class CounterView extends StatelessWidget {
                   child: Text(
                     '$state',
                     key: const Key('textView_counterValue_Text'),
-                    style: textTheme.displayMedium),
+                    style: textTheme.displayMedium,
+                  ),
                 );
               },
             ),

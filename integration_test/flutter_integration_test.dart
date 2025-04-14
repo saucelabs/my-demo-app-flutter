@@ -17,44 +17,65 @@ void main() {
       };
     });
 
-    testWidgets("First testing scenario increment 5 decrement 3",
-    (tester) async {
-      app.main();
-      await tester.pumpAndSettle(); // wait for app to be ready.
-      /**
-       * import 'package:flutter/material.dart';
-       * We can use the enterText to write test on elements on the screen.
-       * This function takes 2 elements a finder and String to be written
-       *
-       * finder examples :
-       *      find.byType(TextFormField).at(0)
-       *      find.byKey(const Key("test"))
-       */
+    for (int testIndex = 1; testIndex <= 20; testIndex++) {
+      testWidgets("Test $testIndex - Run for 1 minute+", (tester) async {
+        app.main();
+        await tester.pumpAndSettle(); // wait for app to be ready.
+        const incKey = Key('counterView_increment_floatingActionButton');
+        const decKey = Key('counterView_decrement_floatingActionButton');
+        const timerKey = Key('textView_timer_Text');
+        const counterKey = Key('textView_counterValue_Text');
+        int counter = 0;
 
-      // Click the increment button 5 times
-      const incKey = Key('counterView_increment_floatingActionButton');
-      for (var i = 0; i < 5; i++) {
-        await Future.delayed(const Duration(seconds: 1));
-        await tester.tap(find.byKey(incKey));
-        await tester.pump(); // Rebuild the widget after each tap.
-      }
+        // Click the increment button 5 times
+        for (var i = 0; i < 5; i++) {
+          await tester.tap(find.byKey(incKey));
+          counter++;
+          await tester.pump(); // Rebuild the widget after each tap.
+          await Future.delayed(const Duration(seconds: 5));
+        }
 
-      // Click the decrement button 3 times
-      const decKey = Key('counterView_decrement_floatingActionButton');
-      for (var i = 0; i < 3; i++) {
-        await Future.delayed(const Duration(seconds: 1));
-        await tester.tap(find.byKey(decKey));
-        await tester.pump(); // Rebuild the widget after each tap.
-      }
+        // Click the decrement button 3 times
+        for (var i = 0; i < 3; i++) {
+          await tester.tap(find.byKey(decKey));
+          counter--;
+          await tester.pump();
+          await Future.delayed(const Duration(seconds: 5));
+        }
+        // Click the increment button 4 times
+        for (var i = 0; i < 4; i++) {
+          await tester.tap(find.byKey(incKey));
+          counter++;
+          await tester.pump();
+          await Future.delayed(const Duration(seconds: 5));
+        }
+        
+        // Click the decrement button 4 times
+        for (var i = 0; i < 4; i++) {
+          await tester.tap(find.byKey(decKey));
+          counter--;
+          await tester.pump();
+          await Future.delayed(const Duration(seconds: 2));
+        }
+        // Click the increment button 2 times
+        for (var i = 0; i < 2; i++) {
+          await tester.tap(find.byKey(incKey));
+          counter++;
+          await tester.pump();
+          await Future.delayed(const Duration(seconds: 1));
+        }
 
-      await Future.delayed(const Duration(seconds: 2));
-      // Verify the Text shown is 2
-      const counterValueKey = Key('textView_counterValue_Text');
-      expect(find.byKey(counterValueKey), findsOneWidget);
+        await Future.delayed(const Duration(seconds: 2));
+        // Verify the Text shown is 2
+        expect(find.byKey(counterKey), findsOneWidget);
 
-      // Retrieve the Text widget and verify its content.
-      final textWidget = tester.widget<Text>(find.byKey(counterValueKey));
-      expect(textWidget.data, '2');
-    });
+        // Retrieve the Text widget and verify its content.
+        final textWidget = tester.widget<Text>(find.byKey(counterKey));
+        expect(textWidget.data, counter.toString());
+
+        // Verify that we have a timer visible on the screen.
+        expect(find.byKey(timerKey), findsOneWidget);
+      });
+    }
   });
 }
