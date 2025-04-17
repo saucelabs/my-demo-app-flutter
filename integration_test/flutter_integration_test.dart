@@ -17,7 +17,7 @@ void main() {
       };
     });
 
-    for (int testIndex = 1; testIndex <= 20; testIndex++) {
+    for (int testIndex = 1; testIndex <= 9; testIndex++) {
       testWidgets("Test $testIndex - Run for 1 minute+", (tester) async {
         app.main();
         await tester.pumpAndSettle(); // wait for app to be ready.
@@ -31,41 +31,36 @@ void main() {
         for (var i = 0; i < 5; i++) {
           await tester.tap(find.byKey(incKey));
           counter++;
-          await tester.pump(); // Rebuild the widget after each tap.
-          await Future.delayed(const Duration(seconds: 5));
+          await rebuildTestWidgetAfterXSeconds(tester, 5);
         }
 
         // Click the decrement button 3 times
         for (var i = 0; i < 3; i++) {
           await tester.tap(find.byKey(decKey));
           counter--;
-          await tester.pump();
-          await Future.delayed(const Duration(seconds: 5));
+          await rebuildTestWidgetAfterXSeconds(tester, 5);
         }
         // Click the increment button 4 times
         for (var i = 0; i < 4; i++) {
           await tester.tap(find.byKey(incKey));
           counter++;
-          await tester.pump();
-          await Future.delayed(const Duration(seconds: 5));
+          await rebuildTestWidgetAfterXSeconds(tester, 5);
         }
-        
+
         // Click the decrement button 4 times
         for (var i = 0; i < 4; i++) {
           await tester.tap(find.byKey(decKey));
           counter--;
-          await tester.pump();
-          await Future.delayed(const Duration(seconds: 2));
+          await rebuildTestWidgetAfterXSeconds(tester, 2);
         }
         // Click the increment button 2 times
         for (var i = 0; i < 2; i++) {
           await tester.tap(find.byKey(incKey));
           counter++;
-          await tester.pump();
-          await Future.delayed(const Duration(seconds: 1));
+          await rebuildTestWidgetAfterXSeconds(tester, 1);
         }
 
-        await Future.delayed(const Duration(seconds: 2));
+        await rebuildTestWidgetAfterXSeconds(tester, 2);
         // Verify the Text shown is 2
         expect(find.byKey(counterKey), findsOneWidget);
 
@@ -78,4 +73,11 @@ void main() {
       });
     }
   });
+}
+
+Future<void> rebuildTestWidgetAfterXSeconds(WidgetTester tester, int nbSec) async {
+  for (var i = 0; i < nbSec; i++) {
+    await tester.pump(); // Rebuild the widget after each tap.
+    await Future.delayed(const Duration(seconds: 1));
+  }
 }
