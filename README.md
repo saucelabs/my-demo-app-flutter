@@ -62,6 +62,7 @@ Navigate to the android directory and build the app:
 
 ```bash
 cd android
+gradle wrapper
 ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/appium_test.dart
 ```
 
@@ -167,11 +168,13 @@ native test frameworks, `Espresso` and `XCTest`.
    ```bash title="Terminal Command"
     # Go to the android folder which contains the "gradlew" script used for building Android apps from the terminal
     pushd android
+    gradle wrapper
+    
     # Build an Android test APK (uses the MainActivityTest.java file created in step 1)
     ./gradlew app:assembleAndroidTest
 
     # Build a debug APK by passing the integration test file
-    ./gradlew app:assembleDebug -Ptarget="..../integration_test/flutter_integration_test.dart"
+    ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/flutter_integration_test.dart
     # Go back to the root of the project
     popd
    ```
@@ -188,8 +191,8 @@ native test frameworks, `Espresso` and `XCTest`.
    sauce:
       concurrency: 1
    espresso:
-      app: ...../flutter/my-demo-app-flutter/build/app/outputs/flutter-apk/app-debug.apk
-      testApp: ....../flutter/my-demo-app-flutter/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+      app: ./build/app/outputs/flutter-apk/app-debug.apk
+      testApp: ./build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
    suites:
       - name: "Sauce Labs Espresso with flutter integration tests"
         testOptions:
@@ -209,7 +212,7 @@ native test frameworks, `Espresso` and `XCTest`.
    saucectl configure -u USERNAME -a ACCESS_KEY
    saucectl run -c sauceconnect/flutter_integration_test.yaml
    ```
-    * Check the status of you test on `app.saucelabs.com`
+    * Check the status of your test on `app.saucelabs.com`
    ``` bash title="saucectl run command output"
    12:24:52 INF Running Espresso in Sauce Labs
                                          (.                          
@@ -398,4 +401,4 @@ native test frameworks, `Espresso` and `XCTest`.
     saucectl configure -u USERNAME -a ACCESS_KEY
     saucectl run -c .sauce/flutter_integration_test_ios.yaml
     ```
-  * Check the status of you test on `app.saucelabs.com`
+  * Check the status of your test on `app.saucelabs.com`
