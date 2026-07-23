@@ -8,6 +8,15 @@ void main() {
   // Ensure IntegrationTestWidgetsFlutterBinding is initialized
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized() as IntegrationTestWidgetsFlutterBinding;
 
+  // On real devices, the OS accessibility/automation layer (e.g. Sauce Labs'
+  // device automation, XCUITest, Android UiAutomation) can enable semantics
+  // mid-test. That leaves a SemanticsHandle active that the test never owns and
+  // cannot dispose, so WidgetTester's end-of-test verification throws
+  // "A SemanticsHandle was active at the end of the test." and fails an
+  // otherwise-passing test. Neutralizing the callback stops Flutter from
+  // reacting to the platform toggling semantics. See flutter/flutter#129231.
+  binding.platformDispatcher.onSemanticsEnabledChanged = () {};
+
 
   group('E2E Test With Flutter', (){
     tearDownAll(() async {
