@@ -87,9 +87,10 @@ Navigate to the android directory and build the app:
 
 ```bash
 cd android
-gradle wrapper
 ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/appium_test.dart
 ```
+
+> The project ships a committed Gradle wrapper pinned to Gradle 8.4 (required by Android Gradle Plugin 8.3.0). Use `./gradlew`, not a system `gradle` — running a bare `gradle wrapper` with an older system Gradle (e.g. 7.5) downgrades the wrapper and fails with *"Minimum supported Gradle version is 8.4"*.
 
 #### Build the iOS app
 
@@ -104,6 +105,52 @@ For Real Device - Release mode
 ```bash
 flutter build ipa --release integration_test/appium_test.dart
 ```
+
+### Run Appium tests against the diagnostics controls
+
+The [Appium Flutter Integration Driver](https://docs.saucelabs.com/mobile-apps/automated-testing/appium/appium-flutter-integration-driver/) drives the app built above by finding widgets by **key**, **semantics label**, or **text** and tapping them. Because the Diagnostics menu is part of `CounterApp`, you can generate crash reports and TestFairy logs straight from an Appium test — no Flutter integration-test code required. The locators are listed in [Generating Test Artifacts](#generating-test-artifacts-crash-reports--testfairy-logs).
+
+**1. Install Appium and the driver**
+
+```bash
+npm i -g appium
+appium driver install --source npm appium-flutter-integration-driver
+appium         # start the server (defaults to http://127.0.0.1:4723)
+```
+
+**2. Capabilities** (WebdriverIO example — Android; swap `app`/`platformName` for iOS)
+
+```javascript
+const capabilities = {
+  platformName: 'Android',
+  'appium:automationName': 'FlutterIntegration',
+  'appium:app': '<path>/build/app/outputs/apk/debug/app-debug.apk',
+  'appium:appActivity': '.MainActivity',
+};
+```
+
+**3. Example test — generate TestFairy logs, then force a crash**
+
+```javascript
+// Open the Diagnostics menu (🐞) in the app bar.
+await (await browser.flutterByValueKey$('counterView_diagnostics_menuButton')).click();
+
+// Generate TestFairy log events; assert the confirmation SnackBar appears.
+await (await browser.flutterByValueKey$('diagnostics_testFairyLogs_menuItem')).click();
+await browser.flutterWaitForVisible('diagnostics_logsGenerated_snackBar');
+
+// Re-open the menu and force a native crash for a Backtrace crash report.
+await (await browser.flutterByValueKey$('counterView_diagnostics_menuButton')).click();
+await (await browser.flutterByValueKey$('diagnostics_nativeCrash_menuItem')).click();
+// The app terminates here — the session ends, which is the expected outcome
+// of the crash test. Start a new session for any subsequent steps.
+```
+
+You can also locate the same items by their semantics labels (e.g. `browser.flutterBySemanticsLabel$('Force Native Crash')`) or visible text (`browser.flutterByText$('Generate TestFairy Logs')`).
+
+**Running on Sauce Labs RDC:** upload `app-debug.apk` (and the `Runner.ipa` for iOS) to App Storage, point `appium:app` at the storage ID, and set the Sauce data-center URL. For the crash report and TestFairy logs to be collected, enable instrumentation on the session (`crashCollectionEnabled` / `backtraceInjectionEnabled` and `testfairyEnabled`) so RDC injects the Backtrace and TestFairy SDKs at install time.
+
+> **Version note:** `pubspec.yaml` pins `appium_flutter_server: 0.0.18`. The on-device server and the installed `appium-flutter-integration-driver` version should be compatible; if a session fails to hand off to the Flutter server, align the two versions (bump the dev dependency and rebuild).
 
 ## Test Your Application Using Native Test Frameworks
 In the following part we have a step-by-step guide to prepare your application for flutter integration testsing using Android's and Apple's 
