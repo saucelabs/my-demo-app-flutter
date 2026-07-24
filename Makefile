@@ -22,7 +22,6 @@ build-ios-ipa-files: build-for-testing
 
 build-android-apk-files:
 	pushd android \
-    && gradle wrapper \
     && ./gradlew app:assembleAndroidTest \
     && ./gradlew app:assembleDebug -Ptarget="$(FLUTTER_INTEGRATION_TEST_DART_FILE)"
 

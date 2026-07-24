@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../diagnostics/diagnostics.dart';
 import '../counter.dart';
 
 /// {@template counter_view}
@@ -15,6 +16,12 @@ class CounterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sauce Labs Demo'),
+        actions: const <Widget>[
+          DiagnosticsMenu(),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

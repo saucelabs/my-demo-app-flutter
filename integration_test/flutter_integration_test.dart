@@ -57,5 +57,27 @@ void main() {
       final textWidget = tester.widget<Text>(find.byKey(counterValueKey));
       expect(textWidget.data, '2');
     });
+
+    testWidgets("Generate TestFairy logs via the diagnostics menu",
+    (tester) async {
+      app.main();
+      await tester.pumpAndSettle(); // wait for app to be ready.
+
+      // Open the diagnostics menu in the app bar.
+      await tester.tap(find.byKey(const Key('counterView_diagnostics_menuButton')));
+      await tester.pumpAndSettle();
+
+      // Tap "Generate TestFairy Logs" — emits logcat/NSLog + Dart log lines
+      // that the injected TestFairy SDK records into testfairy.jsonl.
+      await tester.tap(find.byKey(const Key('diagnostics_testFairyLogs_menuItem')));
+      await tester.pumpAndSettle();
+
+      // The confirmation SnackBar proves the round-trip to native completed.
+      expect(
+        find.byKey(const Key('diagnostics_logsGenerated_snackBar')),
+        findsOneWidget,
+      );
+      await Future.delayed(const Duration(seconds: 2));
+    });
   });
 }

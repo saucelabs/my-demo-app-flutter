@@ -9,6 +9,31 @@ mobile devices cloud, with a particular focus on our integration with the [Appiu
 
 In addition to Appium, this app also supports running Flutter integration tests using native test frameworks like Espresso (for Android) and XCTest (for iOS) on Sauce Labs, providing a comprehensive testing solution for Flutter applications.
 
+## Generating Test Artifacts (Crash Reports & TestFairy Logs)
+
+To help exercise the Real Device Cloud **destructive-read artifact group** (crash reports and TestFairy logs), the app exposes a **Diagnostics menu** in the top app bar (the 🐞 bug icon). It offers three actions:
+
+| Action | What it does | Artifact produced |
+|--------|--------------|-------------------|
+| **Force Native Crash** | Crashes the process from native code (uncaught `RuntimeException` on Android, `SIGSEGV` on iOS). | **Crash report** — captured by the injected **Backtrace** SDK (`cache/rdc-backtrace/crashpad/*` on Android, the crash directory on iOS). |
+| **Force Dart Crash** | Throws an uncaught Dart error, reported through `FlutterError.onError`. | Dart error log (supplementary; exercises the Dart error path). |
+| **Generate TestFairy Logs** | Emits a burst of native (`logcat`/`NSLog`) and Dart log lines plus a UI event. | **TestFairy logs** — captured by the injected **TestFairy** SDK into `files/rdc-testfairy/testfairy.jsonl`. |
+
+> The Backtrace and TestFairy SDKs are **injected by RDC at install time** (when `crashCollectionEnabled` / `backtraceInjectionEnabled` / `testfairyEnabled` are set for the session). This app does **not** bundle them — it only creates the on-device conditions the SDKs capture. Screenshots (the third artifact in this group) are captured by the platform and need no app change, so they are intentionally not covered here.
+
+### Automation locators
+
+The controls carry stable widget keys and semantics labels so they can be driven from Appium (Flutter integration driver) and Flutter integration tests:
+
+| Element | Widget `Key` | Semantics label |
+|---------|--------------|-----------------|
+| Diagnostics menu button | `counterView_diagnostics_menuButton` | `Diagnostics Menu` |
+| Force Native Crash | `diagnostics_nativeCrash_menuItem` | `Force Native Crash` |
+| Force Dart Crash | `diagnostics_dartCrash_menuItem` | `Force Dart Crash` |
+| Generate TestFairy Logs | `diagnostics_testFairyLogs_menuItem` | `Generate TestFairy Logs` |
+
+The native bridge lives on the `com.saucelabs.mydemoapp.flutter/diagnostics` MethodChannel (`crashNative`, `generateNativeLogs`), implemented in `android/.../MainActivity.java` and `ios/Runner/AppDelegate.swift`; the Dart wrapper is `lib/diagnostics/diagnostics_service.dart`.
+
 ## Requirements
 
 To build and use this demo app, ensure you have the following dependencies installed on your local machine:
